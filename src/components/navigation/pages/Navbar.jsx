@@ -1,19 +1,19 @@
-import { Fragment } from "react";
+import {Fragment} from "react";
 
 export default function Navbar() {
   return (
     <Fragment>
-      <nav class="topnav navbar navbar-light">
+      <nav className="topnav navbar navbar-light">
         <button
-          type="button"
-          class="navbar-toggler text-muted mt-2 p-0 mr-3 collapseSidebar"
+            type="button"
+            className="navbar-toggler text-muted mt-2 p-0 mr-3 collapseSidebar"
         >
-          <i class="fe fe-menu navbar-toggler-icon"></i>
+          <i className="fe fe-menu navbar-toggler-icon"></i>
         </button>
-        <ul class="nav">
-          <li class="nav-item dropdown">
+        <ul className="nav">
+          <li className="nav-item dropdown">
             <a
-              class="nav-link dropdown-toggle text-muted pr-0"
+              className="nav-link dropdown-toggle text-muted pr-0"
               href="#"
               id="navbarDropdownMenuLink"
               role="button"
@@ -21,25 +21,25 @@ export default function Navbar() {
               aria-haspopup="true"
               aria-expanded="false"
             >
-              <span class="avatar avatar-sm mt-2">
+              <span className="avatar avatar-sm mt-2">
                 <img
                   src="assets/assets/avatars/face-1.jpg"
                   alt="..."
-                  class="avatar-img rounded-circle"
+                  className="avatar-img rounded-circle"
                 />
               </span>
             </a>
             <div
-              class="dropdown-menu dropdown-menu-right"
+              className="dropdown-menu dropdown-menu-right"
               aria-labelledby="navbarDropdownMenuLink"
             >
-              <a class="dropdown-item" href="#">
+              <a className="dropdown-item" href="#">
                 Profile
               </a>
-              <a class="dropdown-item" href="#">
+              <a className="dropdown-item" href="#">
                 Settings
               </a>
-              <a class="dropdown-item" href="#">
+              <a className="dropdown-item" href="#">
                 Activities
               </a>
             </div>

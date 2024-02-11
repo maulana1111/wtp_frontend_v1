@@ -1,4 +1,4 @@
-import { ChangeEvent, Fragment } from "react";
+import { Fragment } from "react";
 
 export default function PageAuth({ isViewPassword, onChangeViewPass }) {
   return (
@@ -38,10 +38,16 @@ export default function PageAuth({ isViewPassword, onChangeViewPass }) {
                   <i className="fa fa-eye" id="togglePassword1"></i>
                 </button>
               </div>
+              <div className="form-group" style={{marginTop: 5}}>
               <span>Database</span>
-              <select className="form-control">
-                <option value="">select</option>
-              </select>
+                <select className="form-control" id="exampleFormControlSelect1">
+                  <option>PST LIVE</option>
+                  <option>DMI_LIVE</option>
+                  <option>PMT_LIVE</option>
+                  <option>PSM_LIVE</option>
+                  <option>PKS_MODIF</option>
+                </select>
+              </div>
               <br />
               <button className="btn btn-success">Login</button>
             </div>

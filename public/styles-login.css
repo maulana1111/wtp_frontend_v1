@@ -72,3 +72,11 @@
 .form-login > button {
   color: white;
 }
+
+.form-control option:checked {
+  background-color: lightgreen; /* Ubah warna sesuai keinginan */
+}
+
+.form-control option:focus {
+  background-color: lightgreen; /* Ubah warna sesuai keinginan */
+}
