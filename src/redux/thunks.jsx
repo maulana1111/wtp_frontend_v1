@@ -1,39 +1,77 @@
 // thunks.js
 
 import axios from "axios";
-import {
-  fetchDataLoginRequest,
-  fetchDataLoginSuccess,
-  fetchDataLoginFailure,
-} from "./actions";
 
-const API_BASE_URL = process.env.BASE_URL;
+const API_BASE_URL = process.env.REACT_APP_BASE_URL;
 
 const api = axios.create({
   baseURL: API_BASE_URL,
 });
 
-export const fetchData = (url, config = {}) => {
-  return async (dispatch) => {
-    dispatch(fetchDataLoginRequest());
+// Set konfigurasi default untuk setiap permintaan API
+api.interceptors.request.use((config) => {
+  // Mendapatkan token dari tempat penyimpanan yang sesuai (misalnya localStorage)
+  // const token =
+  //   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.nb3fmCpvFMm9IBiCwMm9tshnnH_BaVECqRKmtpvgu58";
+  // const token = localStorage.getItem('accessToken');
+
+  // Menambahkan token ke header jika tersedia
+  // if (token) {
+  //   config.headers.Authorization = `${token}`;
+  config.headers["Content-Type"] = "application/json";
+  config.headers["Accept"] = "application/json";
+  // }
+  return config;
+});
+
+const requestData = (method, url, data, config = {}) => {
+  return new Promise((resolve, reject) => {
     try {
-      const response = await api.get(url, config);
-      dispatch(fetchDataLoginSuccess(response.data));
+      switch (method) {
+        // GET tanpa TOKEN
+        case "GET":
+          api
+            .get(url, { ...config, params: data })
+            .then((response) => resolve(response.data))
+            .catch((error) => reject(error));
+          break;
+        // GET tanpa TOKEN
+        case "GET_RESTRICT":
+          api
+            .get(url, { ...config, params: data })
+            .then((response) => resolve(response.data))
+            .catch((error) => reject(error));
+          break;
+        case "POST":
+          api
+            .post(url, data, config)
+            .then((response) => resolve(response.data))
+            .catch((error) => reject(error));
+          break;
+        case "PATCH":
+          api
+            .patch(url, data, config)
+            .then((response) => resolve(response.data))
+            .catch((error) => reject(error));
+          break;
+        case "DELETE":
+          api
+            .delete(url, data, config)
+            .then((response) => resolve(response.data))
+            .catch((error) => reject(error));
+          break;
+        default:
+          throw new Error(`Unsupported method: ${method}`);
+      }
     } catch (error) {
-      dispatch(fetchDataLoginFailure(error.message));
+      if (error.response && error.response.status === 401) {
+        // Token expired, redirect to the specified URL
+        window.location.href = "/login";
+      } else {
+        reject(new Error(error.message)); // Melempar error
+      }
     }
-  };
+  });
 };
 
-// Jika Anda memerlukan operasi POST, PUT, DELETE, dll, tambahkan di sini
-// Contoh:
-export const postData = (url, data, config = {}) => {
-  return async (dispatch) => {
-    try {
-      const response = await api.post(url, data, config);
-      dispatch(fetchDataLoginSuccess(response.data));
-    } catch (error) {
-      dispatch(fetchDataLoginFailure(error.message));
-    }
-  };
-};
+export default requestData;

@@ -23,6 +23,7 @@
     <link rel="stylesheet" href="assets/css/jquery.steps.css" />
     <link rel="stylesheet" href="assets/css/jquery.timepicker.css" />
     <link rel="stylesheet" href="assets/css/quill.snow.css" />
+
     <!-- Date Range Picker CSS -->
     <link rel="stylesheet" href="assets/css/daterangepicker.css" />
     <!-- App CSS -->
@@ -34,7 +35,7 @@
       disabled
     />
     <link rel="stylesheet" href="styles-login.css" />
-    <link rel="stylesheet" href="assets/css/dataTables.bootstrap4.css" />
+
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
@@ -42,32 +43,35 @@
       crossorigin="anonymous"
       referrerpolicy="no-referrer"
     />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css"
+    />
 
-    
     <title>React App</title>
   </head>
   <body class="vertical light">
     <div class="wrapper">
       <div id="root"></div>
+      <div id="popup-root"></div>
     </div>
     <!--
-      This HTML file is a template.
-      If you open it directly in the browser, you will see an empty page.
+    This HTML file is a template.
+    If you open it directly in the browser, you will see an empty page.
 
-      You can add webfonts, meta tags, or analytics to this file.
-      The build step will place the bundled scripts into the <body> tag.
+    You can add webfonts, meta tags, or analytics to this file.
+    The build step will place the bundled scripts into the <body> tag.
 
-      To begin the development, run `npm start` or `yarn start`.
-      To create a production bundle, use `npm run build` or `yarn build`.
-    -->
+    To begin the development, run `npm start` or `yarn start`.
+    To create a production bundle, use `npm run build` or `yarn build`.
+  -->
     <script src="assets/js/jquery-3.7.1.min.js"></script>
     <script src="assets/js/custom_js.js"></script>
-    <script src="assets/js/apps.js"></script>
     <script src="assets/js/popper.min.js"></script>
     <script src="assets/js/moment.min.js"></script>
     <script src="assets/js/bootstrap.min.js"></script>
     <script src="assets/js/simplebar.min.js"></script>
-    <script src="assets/js/daterangepicker.js"></script>
     <script src="assets/js/jquery.stickOnScroll.js"></script>
     <script src="assets/js/tinycolor-min.js"></script>
     <script src="assets/js/config.js"></script>
@@ -77,6 +81,7 @@
     <script src="assets/js/datamaps-zoomto.js"></script>
     <script src="assets/js/datamaps.custom.js"></script>
     <script src="assets/js/Chart.min.js"></script>
+    <script src="assets/js/daterangepicker.js"></script>
     <script>
       /* defind global options */
       Chart.defaults.global.defaultFontFamily = base.defaultFontFamily;
@@ -93,6 +98,7 @@
     <script src="assets/js/jquery.timepicker.js"></script>
     <script src="assets/js/dropzone.min.js"></script>
     <script src="assets/js/uppy.min.js"></script>
+    <script src="assets/js/apps.js"></script>
     <script src="assets/js/quill.min.js"></script>
     <script>
       $(".select2").select2({
@@ -133,6 +139,7 @@
           start.format("MMMM D, YYYY") + " - " + end.format("MMMM D, YYYY")
         );
       }
+
       $("#reportrange").daterangepicker(
         {
           startDate: start,
@@ -304,17 +311,6 @@
         });
       }
     </script>
-    <script src="assets/js/jquery.dataTables.min.js"></script>
-    <script src="assets/js/dataTables.bootstrap4.min.js"></script>
-    <script>
-      $("#dataTable-1").DataTable({
-        // autoWidth: true,
-        lengthMenu: [
-          [5, 10, 15, -1],
-          [5, 10, 15, "All"],
-        ],
-      });
-    </script>
     <!-- Global site tag (gtag.js) - Google Analytics -->
     <script
       async
@@ -326,6 +322,7 @@
       function gtag() {
         dataLayer.push(arguments);
       }
+
       gtag("js", new Date());
       gtag("config", "UA-56159088-1");
     </script>

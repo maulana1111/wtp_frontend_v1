@@ -1,19 +1,32 @@
 // actions.js
 
-export const FETCH_DATA_LOGIN_REQUEST = 'FETCH_DATA_LOGIN_REQUEST';
-export const FETCH_DATA_LOGIN_SUCCESS = 'FETCH_DATA_LOGIN_SUCCESS';
-export const FETCH_DATA_LOGIN_FAILURE = 'FETCH_DATA_LOGIN_FAILURE';
+// login action
+export const FETCH_SUCCESS_LOGIN = "FETCH_SUCCESS_LOGIN";
 
-export const fetchDataLoginRequest = () => ({
-  type: FETCH_DATA_LOGIN_REQUEST
+// menu action
+export const FETCH_SUCCESS_MENU = "FETCH_SUCCESS_MENU";
+
+// Success Failed Action
+export const FETCH_REQUEST = "FETCH_REQUEST";
+export const FETCH_FAILURE = "FETCH_FAILURE";
+
+export const fetchSuccessLogin = (data) => {
+  return {
+    type: FETCH_SUCCESS_LOGIN,
+    payload: data,
+  };
+};
+
+export const fetchSuccessMenu = (data) => ({
+  type: FETCH_SUCCESS_MENU,
+  payload: data,
 });
 
-export const fetchDataLoginSuccess = data => ({
-  type: FETCH_DATA_LOGIN_SUCCESS,
-  payload: data
+export const fetchRequest = (data) => ({
+  type: FETCH_REQUEST,
 });
 
-export const fetchDataLoginFailure = error => ({
-  type: FETCH_DATA_LOGIN_FAILURE,
-  payload: error
+export const fetchFailure = (error) => ({
+  type: FETCH_FAILURE,
+  payload: error,
 });

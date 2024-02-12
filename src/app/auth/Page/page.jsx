@@ -1,6 +1,25 @@
-import { Fragment } from "react";
+import { Fragment, useState } from "react";
+import ButtonLoader from "../../../components/Loader/ButtonLoader";
 
-export default function PageAuth({ isViewPassword, onChangeViewPass }) {
+export default function PageAuth({
+  username,
+  password,
+  isViewPassword,
+  onChangeViewPass,
+  onChangeUsername,
+  onChangePassword,
+  isLoading,
+  onClickLogin,
+}) {
+
+  const ButtonLogin = () => {
+    return (
+      <button className="btn btn-success" onClick={() => onClickLogin()}>
+        Login
+      </button>
+    );
+  };
+
   return (
     <Fragment>
       <div className="login-content">
@@ -22,12 +41,19 @@ export default function PageAuth({ isViewPassword, onChangeViewPass }) {
             </div>
             <div className="form-login">
               <span>Username</span>
-              <input type="text" className="form-control" />
+              <input
+                type="text"
+                className="form-control"
+                value={username}
+                onChange={(e) => onChangeUsername(e.target.value)}
+              />
               <span>Password</span>
               <div className="input-group">
                 <input
                   type={isViewPassword ? "text" : "password"}
                   className="form-control"
+                  value={password}
+                  onChange={(e) => onChangePassword(e.target.value)}
                 />
                 <button
                   className="input-group-text"
@@ -38,8 +64,8 @@ export default function PageAuth({ isViewPassword, onChangeViewPass }) {
                   <i className="fa fa-eye" id="togglePassword1"></i>
                 </button>
               </div>
-              <div className="form-group" style={{marginTop: 5}}>
-              <span>Database</span>
+              <div className="form-group" style={{ marginTop: 5 }}>
+                <span>Database</span>
                 <select className="form-control" id="exampleFormControlSelect1">
                   <option>PST LIVE</option>
                   <option>DMI_LIVE</option>
@@ -49,7 +75,7 @@ export default function PageAuth({ isViewPassword, onChangeViewPass }) {
                 </select>
               </div>
               <br />
-              <button className="btn btn-success">Login</button>
+              {isLoading ? <ButtonLoader /> : <ButtonLogin />}
             </div>
 
             <a href="#">Forgot Password</a>

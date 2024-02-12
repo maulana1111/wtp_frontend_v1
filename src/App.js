@@ -4,6 +4,7 @@ import AuthController from "./app/auth/Controller/AuthController";
 import ControllerNavigation from "./components/navigation/Controller/ControllerNavigation";
 import ControllerDashboard from "./app/modul/dashboard/Controller/ControllerDashboard";
 import ControllerMenu from "./app/modul/menu_modul/Controller/MenuController";
+import PageNotFound from "./app/Not Found/PageNotFound";
 
 function App() {
   return (
@@ -13,6 +14,8 @@ function App() {
         <Route index element={<ControllerDashboard />} />
         <Route path="/menu" element={<ControllerMenu />} />
       </Route>
+
+      <Route path="*" element={<PageNotFound />} />
     </Routes>
   );
 }

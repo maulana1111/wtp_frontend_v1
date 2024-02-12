@@ -1,8 +1,23 @@
-import { Fragment } from "react";
+import {Fragment, useEffect} from "react";
 import { removeUnderscoreAndCapitalize } from "../../../utils/keyUtils";
+import $ from 'jquery';
+import 'datatables.net';
 
 export default function CrudViewPages({ title, data }) {
-  //   console.log(data);
+  useEffect(() => {
+    $('#dataTables-1').DataTable({
+      autoWidth: true,
+      lengthMenu: [
+        [5, 10, 15, -1],
+        [5, 10, 15, 'All'],
+      ],
+    });
+
+    // Membersihkan setelah komponen tidak lagi diperlukan
+    return () => {
+      $('#dataTables-1').DataTable().destroy();
+    };
+  }, []);
   const keys = Object.keys(data[0]);
   return (
     <Fragment>
@@ -11,7 +26,7 @@ export default function CrudViewPages({ title, data }) {
         <div className="col-md-12">
           <div className="card shadow">
             <div className="card-body">
-              <table className="table datatables display" id="dataTable-1">
+              <table id="dataTables-1" className="display table datatables">
                 <thead>
                   <tr>
                     {keys.map((key, i) => (
