@@ -1,18 +1,33 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import PageAuth from "../Page/page";
 import { showPopupAlert } from "../../../components/Notification/PopupAlert";
-import { fetchSuccessLogin } from "../../../redux/actions";
-import { useDispatch, useSelector } from "react-redux";
+// import { fetchSuccessLogin } from "../../../redux/actions";
+// import { useSelector } from "react-redux";
 import requestData from "../../../redux/thunks";
+import { setLocalStorageItem } from "../../../utils/LocalStorage";
+import { useNavigate } from "react-router-dom";
+import PageLoader from "../../../components/Loader/PageLoader";
 
 function AuthController() {
-  const dispatch = useDispatch();
   const [isViewPassword, setIsViewPassword] = useState(false);
-  const [isLoading, setIsLoading] = useState(
-    useSelector((state) => state.loading)
-  );
+  const [isLoading, setIsLoading] = useState(false);
+  const [isLoadingView, setIsLoadingView] = useState(false);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [selectedDatabase, setSelectedDatabase] = useState("");
+  const [database, setDatabase] = useState([]);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    setIsLoadingView(true);
+    getDatabase();
+    setIsLoadingView(false);
+  }, []);
+
+  const getDatabase = async () => {
+    const resp = await requestData("GET", "db-companies/", null, null);
+    setDatabase(resp.results);
+  };
 
   const toggleViewPassword = () => {
     setIsViewPassword(!isViewPassword);
@@ -30,22 +45,29 @@ function AuthController() {
         "POST",
         "login/",
         { username: username, password: password },
-        null,
-        fetchSuccessLogin()
+        null
       );
-
-      console.log(respons);
-      console.log(respons.refresh);
+      setLocalStorageItem([
+        { access_token: respons.access },
+        { menu: respons.authorities.menu },
+        { refresh_token: respons.refresh },
+        { database: selectedDatabase },
+      ]);
+      navigate("/");
+      return showPopupAlert(true, "Success Login");
     } catch (error) {
-        console.log(error);
-      if (error.response.status && error.response.status === 401) {
+      console.log(error);
+      if (
+        error.response &&
+        error.response.status &&
+        error.response.status === 401
+      ) {
         setIsLoading(false);
         return showPopupAlert(false, "Password or Username is wrong");
       }
       setIsLoading(false);
-      return showPopupAlert(false, error);
+      return showPopupAlert(false, error.message);
     }
-    setIsLoading(false);
   };
 
   const CheckField = () => {
@@ -56,7 +78,9 @@ function AuthController() {
     return true;
   };
 
-  return (
+  return isLoadingView ? (
+    <PageLoader />
+  ) : (
     <PageAuth
       username={username}
       password={password}
@@ -65,7 +89,13 @@ function AuthController() {
       onChangeViewPass={toggleViewPassword}
       isViewPassword={isViewPassword}
       isLoading={isLoading}
+      database={database}
+      selectedDatabase={selectedDatabase}
       onClickLogin={() => doLogin()}
+      onChangeSelectedDatabase={(e) => {
+        console.log(e);
+        setSelectedDatabase(e);
+      }}
     />
   );
 }

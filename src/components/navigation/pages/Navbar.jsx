@@ -36,11 +36,8 @@ export default function Navbar() {
               <a className="dropdown-item" href="#">
                 Profile
               </a>
-              <a className="dropdown-item" href="#">
-                Settings
-              </a>
-              <a className="dropdown-item" href="#">
-                Activities
+              <a className="dropdown-item" href="/logout">
+                Logout
               </a>
             </div>
           </li>

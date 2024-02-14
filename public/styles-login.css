@@ -73,6 +73,10 @@
   color: white;
 }
 
+.form-control select > option{
+  height: 30px;
+}
+
 .form-control option:checked {
   background-color: lightgreen; /* Ubah warna sesuai keinginan */
 }

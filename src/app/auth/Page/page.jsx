@@ -1,4 +1,4 @@
-import { Fragment, useState } from "react";
+import { Fragment } from "react";
 import ButtonLoader from "../../../components/Loader/ButtonLoader";
 
 export default function PageAuth({
@@ -9,9 +9,11 @@ export default function PageAuth({
   onChangeUsername,
   onChangePassword,
   isLoading,
+  database,
+  selectedDatabase,
   onClickLogin,
+  onChangeSelectedDatabase,
 }) {
-
   const ButtonLogin = () => {
     return (
       <button className="btn btn-success" onClick={() => onClickLogin()}>
@@ -24,7 +26,7 @@ export default function PageAuth({
     <Fragment>
       <div className="login-content">
         <div className="frame">
-          <img src="vessel_image.png" />
+          <img src="vessel_image.png" alt="vessel" />
           <div className="frame-login">
             <div className="logo">
               <div className="right">
@@ -66,19 +68,24 @@ export default function PageAuth({
               </div>
               <div className="form-group" style={{ marginTop: 5 }}>
                 <span>Database</span>
-                <select className="form-control" id="exampleFormControlSelect1">
-                  <option>PST LIVE</option>
-                  <option>DMI_LIVE</option>
-                  <option>PMT_LIVE</option>
-                  <option>PSM_LIVE</option>
-                  <option>PKS_MODIF</option>
+                <select
+                  value={selectedDatabase}
+                  className="form-control select2"
+                  id="simple-select2"
+                  onChange={(e) => onChangeSelectedDatabase(e.target.value)}
+                >
+                  {database.map((value, i) => (
+                    <option key={i} value={value.db_code}>
+                      {value.company_name}
+                    </option>
+                  ))}
                 </select>
               </div>
               <br />
               {isLoading ? <ButtonLoader /> : <ButtonLogin />}
             </div>
 
-            <a href="#">Forgot Password</a>
+            <a href="/">Forgot Password</a>
           </div>
         </div>
       </div>

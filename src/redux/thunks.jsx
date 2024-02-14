@@ -31,11 +31,11 @@ const requestData = (method, url, data, config = {}) => {
         // GET tanpa TOKEN
         case "GET":
           api
-            .get(url, { ...config, params: data })
+            .get(url, { params: data })
             .then((response) => resolve(response.data))
             .catch((error) => reject(error));
           break;
-        // GET tanpa TOKEN
+        // GET dengan TOKEN
         case "GET_RESTRICT":
           api
             .get(url, { ...config, params: data })

@@ -3,11 +3,11 @@ import Asside from "./Asside";
 import Navbar from "./Navbar";
 import { Outlet } from "react-router-dom";
 
-export default function IndexNavigation() {
+export default function IndexNavigation({ menu }) {
   return (
     <Fragment>
       <Navbar />
-      <Asside />
+      <Asside menus={menu} />
       <main role="main" className="main-content">
         <div className="container-fluid">
           <div className="row justify-content-center">
