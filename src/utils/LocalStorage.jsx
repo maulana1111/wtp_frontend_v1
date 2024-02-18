@@ -2,7 +2,12 @@
 export function setLocalStorageItem(value) {
   console.log(value);
   try {
-    value.map((item) => localStorage.setItem(item.key, item.value));
+    value.forEach(item => {
+      for (const key in item) {
+        localStorage.setItem(key, JSON.stringify(item[key]));
+      }
+    });
+    // value.map((item) => localStorage.setItem(item.key, item.value));
 
     // localStorage.setItem(key, JSON.stringify(value));
   } catch (error) {

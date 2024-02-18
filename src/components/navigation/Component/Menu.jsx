@@ -4,7 +4,7 @@ const SubMenu = ({ items, name }) => (
       <li key={item.id}>
         <a
           className="nav-link pl-3"
-          href={`./${item.name.toLowerCase().replace(" ", "-")}.html`}
+          href={`./${item.name.toLowerCase().replace(" ", "-")}`}
         >
           <i className={`fa ${item.icon}`} aria-hidden="true"></i>
           <span className="ml-1">{item.name}</span>

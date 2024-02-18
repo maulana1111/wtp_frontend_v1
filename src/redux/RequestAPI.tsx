@@ -1,41 +1,41 @@
-// thunks.js
+import axios, { AxiosError } from "axios";
+import { RequestOptions } from "./interface/InterfaceRequest";
 
-import axios from "axios";
-
-const API_BASE_URL = process.env.REACT_APP_BASE_URL;
+const API_BASE_URL: string = process.env.REACT_APP_BASE_URL || "";
 
 const api = axios.create({
   baseURL: API_BASE_URL,
 });
 
-// Set konfigurasi default untuk setiap permintaan API
 api.interceptors.request.use((config) => {
-  // Mendapatkan token dari tempat penyimpanan yang sesuai (misalnya localStorage)
-  // const token =
-  //   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.nb3fmCpvFMm9IBiCwMm9tshnnH_BaVECqRKmtpvgu58";
-  // const token = localStorage.getItem('accessToken');
+  const token = localStorage.getItem("access_token");
 
-  // Menambahkan token ke header jika tersedia
-  // if (token) {
-  //   config.headers.Authorization = `${token}`;
-  config.headers["Content-Type"] = "application/json";
-  config.headers["Accept"] = "application/json";
-  // }
+  if (token) {
+    config.headers.Authorization = `Bearer ${token.replace(/"/g, "")}`;
+    config.headers["Content-Type"] = "application/json";
+    config.headers["Accept"] = "application/json";
+  }
+
   return config;
 });
 
-const requestData = (method, url, data, config = {}) => {
+const RequestData = ({
+  method,
+  url,
+  data,
+  config,
+}: RequestOptions): Promise<any> => {
   return new Promise((resolve, reject) => {
     try {
       switch (method) {
-        // GET tanpa TOKEN
+        // GET TANPA TOKEN
         case "GET":
           api
             .get(url, { params: data })
             .then((response) => resolve(response.data))
             .catch((error) => reject(error));
           break;
-        // GET dengan TOKEN
+        // GET DENGAN TOKEN
         case "GET_RESTRICT":
           api
             .get(url, { ...config, params: data })
@@ -56,7 +56,7 @@ const requestData = (method, url, data, config = {}) => {
           break;
         case "DELETE":
           api
-            .delete(url, data, config)
+            .delete(url, { ...config, data })
             .then((response) => resolve(response.data))
             .catch((error) => reject(error));
           break;
@@ -64,14 +64,18 @@ const requestData = (method, url, data, config = {}) => {
           throw new Error(`Unsupported method: ${method}`);
       }
     } catch (error) {
-      if (error.response && error.response.status === 401) {
-        // Token expired, redirect to the specified URL
+      const axiosError = error as AxiosError<any>;
+      if (
+        axios.isAxiosError(axiosError) &&
+        axiosError.response &&
+        axiosError.response.status === 401
+      ) {
         window.location.href = "/login";
       } else {
-        reject(new Error(error.message)); // Melempar error
+        reject(new Error(axiosError.message));
       }
     }
   });
 };
 
-export default requestData;
+export default RequestData;
