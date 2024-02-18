@@ -4,6 +4,8 @@ export interface Props {
   title: string;
   isLoading: boolean;
   data?: any;
+  field: any;
+  onClickAction: (param: any, id: any) => void;
 }
 
 export interface UsersDataProps {
@@ -15,3 +17,4 @@ export interface UsersDataProps {
   is_active: boolean;
   groups: Groups[];
 }
+

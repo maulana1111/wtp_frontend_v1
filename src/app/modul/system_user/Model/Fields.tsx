@@ -7,4 +7,5 @@ export const UserFields: ModalField[] = [
     {id: 'last_name', label: "Last Name", type: 'text'},
     {id: 'email', label: "Email", type: 'email'},
     {id: 'is_active', label: "Is Active", type: 'radio'},
+    {id: 'group', label: 'Groups', type:'select', options: []}
 ]

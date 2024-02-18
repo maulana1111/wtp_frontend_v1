@@ -3,7 +3,7 @@ import { removeUnderscoreAndCapitalize } from "../../../utils/keyUtils";
 import $ from "jquery";
 import "datatables.net";
 
-const Tables = ({ data }) => {
+const Tables = ({ data, handleClickButton }) => {
   useEffect(() => {
     $("#dataTables-1").DataTable({
       autoWidth: true,
@@ -26,9 +26,7 @@ const Tables = ({ data }) => {
       return value ? "true" : "false";
     }
     if (Array.isArray(value)) {
-      return value.map((item, index) => (
-        <span key={index}>{item.name}</span>
-      ));
+      return value.map((item, index) => <span key={index}>{item.name}</span>);
     } else {
       return value;
     }
@@ -39,30 +37,44 @@ const Tables = ({ data }) => {
       <table id="dataTables-1" className="display table datatables">
         <thead>
           <tr>
-            {keys.map((key, i) => (
-              key !== "id" && <th key={i}>{removeUnderscoreAndCapitalize(key)}</th>
-            ))}
+            {keys.map(
+              (key, i) =>
+                key !== "id" && (
+                  <th key={i}>{removeUnderscoreAndCapitalize(key)}</th>
+                )
+            )}
             <th>Actions</th>
           </tr>
         </thead>
         <tbody>
-          {data.map((obj, index) => (
-            <tr key={index}>
-              {Object.entries(obj).map(
-                ([key, value], i) =>
-                  key !== "id" && <td key={i}>{renderValue(value, key)}</td>
-              )}
-              <td className="d-flex flex-row">
-                <button className="btn btn-warning" type="button">
-                  <i className="fa fa-pencil" aria-hidden="true"></i>
-                </button>
-                &nbsp;
-                <button className="btn btn-danger" type="button">
-                  <i className="fa fa-trash" aria-hidden="true"></i>
-                </button>
-              </td>
-            </tr>
-          ))}
+          {data.map((obj, index) => {
+            const { id, ...rest } = obj; // Destructure objek dan ambil id serta sisanya
+
+            return (
+              <tr key={index}>
+                {Object.entries(rest).map(([key, value], i) => (
+                  <td key={i}>{renderValue(value, key)}</td>
+                ))}
+                <td className="d-flex flex-row">
+                  <button
+                    className="btn btn-warning"
+                    type="button"
+                    onClick={() => handleClickButton("edit", id)}
+                  >
+                    <i className="fa fa-pencil" aria-hidden="true"></i>
+                  </button>
+                  &nbsp;
+                  <button
+                    className="btn btn-danger"
+                    type="button"
+                    onClick={() => handleClickButton("delete", id)}
+                  >
+                    <i className="fa fa-trash" aria-hidden="true"></i>
+                  </button>
+                </td>
+              </tr>
+            );
+          })}
         </tbody>
       </table>
     </Fragment>
