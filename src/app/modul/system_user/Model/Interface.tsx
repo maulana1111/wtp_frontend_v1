@@ -4,7 +4,8 @@ export interface Props {
   title: string;
   isLoading: boolean;
   data?: any;
-  field: any;
+  fields: any;
+  formData: any;
   onClickAction: (param: any, id: any) => void;
 }
 
@@ -17,4 +18,3 @@ export interface UsersDataProps {
   is_active: boolean;
   groups: Groups[];
 }
-

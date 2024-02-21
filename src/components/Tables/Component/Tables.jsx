@@ -1,11 +1,14 @@
-import { Fragment, useEffect } from "react";
+import { useEffect } from "react";
 import { removeUnderscoreAndCapitalize } from "../../../utils/keyUtils";
 import $ from "jquery";
 import "datatables.net";
+import { useDispatch } from "react-redux";
+import { StoreIdModulUserAction } from "../../../redux/actions";
 
 const Tables = ({ data, handleClickButton }) => {
+  const dispatch = useDispatch();
   useEffect(() => {
-    $("#dataTables-1").DataTable({
+    const dataTable = $("#dataTables-1").DataTable({
       autoWidth: true,
       lengthMenu: [
         [5, 10, 15, -1],
@@ -13,11 +16,13 @@ const Tables = ({ data, handleClickButton }) => {
       ],
     });
 
-    // Membersihkan setelah komponen tidak lagi diperlukan
     return () => {
-      $("#dataTables-1").DataTable().destroy();
+      if ($.fn.DataTable.isDataTable("#dataTables-1")) {
+        dataTable.destroy();
+      }
     };
-  }, []);
+  }, [data]); // Tambahkan dependency data ke useEffect jika diperlukan
+
   const keys = Object.keys(data[0]);
 
   const renderValue = (value, key) => {
@@ -32,8 +37,12 @@ const Tables = ({ data, handleClickButton }) => {
     }
   };
 
+  const handleClickAction = (param, id) => {
+    dispatch(StoreIdModulUserAction(id, param));
+  };
+
   return (
-    <Fragment>
+    <div>
       <table id="dataTables-1" className="display table datatables">
         <thead>
           <tr>
@@ -59,7 +68,7 @@ const Tables = ({ data, handleClickButton }) => {
                   <button
                     className="btn btn-warning"
                     type="button"
-                    onClick={() => handleClickButton("edit", id)}
+                    onClick={() => handleClickAction("edit", id)}
                   >
                     <i className="fa fa-pencil" aria-hidden="true"></i>
                   </button>
@@ -67,7 +76,7 @@ const Tables = ({ data, handleClickButton }) => {
                   <button
                     className="btn btn-danger"
                     type="button"
-                    onClick={() => handleClickButton("delete", id)}
+                    onClick={() => handleClickAction("delete", id)}
                   >
                     <i className="fa fa-trash" aria-hidden="true"></i>
                   </button>
@@ -77,7 +86,7 @@ const Tables = ({ data, handleClickButton }) => {
           })}
         </tbody>
       </table>
-    </Fragment>
+    </div>
   );
 };
 

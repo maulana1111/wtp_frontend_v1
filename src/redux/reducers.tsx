@@ -1,24 +1,17 @@
 // reducers.js
 import { combineReducers } from "@reduxjs/toolkit";
-import {
-  STORE_FORM_MODAL_MODUL,
-  StoreFormModalModulAction,
-  STORE_ID_DATA,
-  StoreIdModulUserAction,
-} from "./actions";
+import { STORE_FORM_MODAL_MODUL, STORE_ID_DATA } from "./actions";
 import { DataState } from "./interface/InterfaceRedux";
 
 const initialDataState: DataState = {
   stateForm: false,
-  id_modul_users: 0,
+  passing_id_param: {
+    id: null,
+    action: "",
+  },
 };
 
-export type ActionTypes = StoreFormModalModulAction | StoreIdModulUserAction;
-
-const reducers_redux = (
-  state = initialDataState,
-  action: ActionTypes
-): DataState => {
+const reducers_redux = (state = initialDataState, action: any): DataState => {
   switch (action.type) {
     case STORE_FORM_MODAL_MODUL:
       return {
@@ -28,19 +21,18 @@ const reducers_redux = (
     case STORE_ID_DATA:
       return {
         ...state,
-        id_modul_users: action.data,
+        passing_id_param: {
+          id: action.id, // Mengisi nilai id
+          action: action.action, // Mengisi nilai param
+        },
       };
     default:
       return state;
   }
 };
 
-export interface RootState {
-  data: DataState;
-}
-
-const rootReducer = combineReducers({
+export const rootReducer = combineReducers({
   data: reducers_redux,
 });
 
-export default rootReducer;
+export type RootState = ReturnType<typeof rootReducer>;

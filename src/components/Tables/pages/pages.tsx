@@ -1,31 +1,70 @@
-import { Fragment, useState } from "react";
+import { useState } from "react";
 import Tables from "../Component/Tables";
 import EmptyTable from "../Component/EmptyTable";
 import LoadingView from "../../Loader/LoadingView";
-import FormInputController from "../../ModalForm/controller/FormInputController";
 import * as React from "react";
 import { PropsCrudView } from "../interface/interface";
+import ModalForm from "../../ModalForm/pages/FormInputModal";
 
 const CrudViewPages: React.FC<PropsCrudView> = ({
   isLoading,
   title,
   data,
-  field,
-  onClickAction
+  fields,
+  formData,
+  onSubmit,
 }) => {
-  const [isShowModal, setIsShowModal] = useState(false);
+  const [showModal, setShowModal] = useState(false);
+  const [formDatas, setFormDatas] = useState<any>(formData);
+
+  React.useEffect(() => {
+    setFormDatas(formData);
+  }, [formData]);
+
   const onChangeStateModal = () => {
-    // dispatch(StoreFormModalModul(true));
-    setIsShowModal(!isShowModal);
+    setShowModal(!showModal);
+  };
+
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+  ) => {
+    const { name, value } = e.target;
+    console.log(`${name}, ${value}`);
+    
+    setFormDatas((prevFormData: any) => ({
+      ...prevFormData,
+      [name]: value,
+    }));
+    console.log(JSON.stringify(formDatas));
+    
+  };
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+
+    setShowModal(!showModal);
+    const idValue = formData["id"] || "";
+
+    // Memeriksa apakah formData["id"] memiliki nilai
+    const updatedFormData =
+      idValue !== ""
+        ? { ...formDatas, id: idValue } // Jika ada, tambahkan id ke formDatas
+        : { ...formDatas };
+
+    onSubmit(updatedFormData);
   };
 
   return (
-    <Fragment>
+    <div>
       {
-        <FormInputController
-          modalFields={field}
-          showModal={isLoading}
-          initialData={}
+        <ModalForm
+          field={fields}
+          isViewFormModal={showModal}
+          formData={formDatas}
+          onChange={handleChange}
+          onChangeStateViewModal={onChangeStateModal}
+          onSubmit={(e: any) => handleSubmit(e)}
+          title={title}
         />
       }
       <div className="d-flex justify-content-between">
@@ -45,8 +84,9 @@ const CrudViewPages: React.FC<PropsCrudView> = ({
               ) : data && data.length !== 0 ? (
                 <Tables
                   data={data}
-                  handleClickButton={(param: any, id: any) =>
-                    onClickAction(param, id)
+                  handleClickButton={(param: any, data: any) =>
+                    // onClickAction(param, data)
+                    console.log("")
                   }
                 />
               ) : (
@@ -56,7 +96,7 @@ const CrudViewPages: React.FC<PropsCrudView> = ({
           </div>
         </div>
       </div>
-    </Fragment>
+    </div>
   );
 };
 

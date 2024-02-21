@@ -2,9 +2,9 @@ import { Fragment } from "react";
 
 const EmptyTable = () => {
   return (
-    <Fragment>
+    <div>
       <h3 style={{ textAlign: "center" }}>Data Kosong</h3>
-    </Fragment>
+    </div>
   );
 };
 

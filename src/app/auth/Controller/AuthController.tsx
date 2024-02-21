@@ -6,9 +6,9 @@ import { setLocalStorageItem } from "../../../utils/LocalStorage";
 import { useNavigate } from "react-router-dom";
 import { FormData, databases } from "../Model/AuthInterface";
 import * as React from "react";
-import { AxiosError } from "axios";
+import axios, { AxiosError } from "axios";
 
-const AuthController: React.FC = () => {
+const AuthController: React.FC = (data: any) => {
   const [isViewPassword, setIsViewPassword] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [isLoadingView, setIsLoadingView] = useState<boolean>(false);
@@ -21,7 +21,8 @@ const AuthController: React.FC = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    getDatabase();
+    // getDatabase();
+    console.log(JSON.stringify(data));
   }, []);
 
   const getDatabase = async () => {
@@ -30,7 +31,7 @@ const AuthController: React.FC = () => {
     try {
       const resp = await RequestData({
         method: "GET",
-        url: "db-companies/",
+        url: "/api/v1/manager/db-companies/",
         data: {},
         config: {},
       });
@@ -84,7 +85,7 @@ const AuthController: React.FC = () => {
     try {
       const respons = await RequestData({
         method: "POST",
-        url: "login/",
+        url: "/api/v1/manager/login/",
         data: { username: formData.username, password: formData.password },
         config: {},
       });
@@ -134,5 +135,32 @@ const AuthController: React.FC = () => {
     />
   );
 };
+
+export async function getServerSideProps() {
+  // Panggil API dengan menggunakan slug
+  const apiUrl = `http://10.10.16.67:8000/api/v1/manager/db-companies/`; // Ganti dengan URL API sesuai kebutuhan Anda
+
+  try {
+    // Panggil API dengan axios
+    const response = await axios.get(apiUrl);
+    const data = response.data.results;
+    console.log(data);
+
+    // Kembalikan data API sebagai props
+    return {
+      props: {
+        data,
+      },
+    };
+  } catch (error) {
+    // Tangani kesalahan jika ada
+    console.error("Error fetching data:", error);
+    return {
+      props: {
+        data: null,
+      },
+    };
+  }
+}
 
 export default AuthController;

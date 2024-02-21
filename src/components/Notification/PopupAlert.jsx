@@ -1,6 +1,5 @@
 import { useEffect } from "react";
 import Swal from "sweetalert2";
-import ReactDOM from "react-dom/client";
 
 const PopupAlert = ({ isSuccess, title }) => {
   useEffect(() => {

@@ -6,11 +6,11 @@ const LoadingView = () => {
     height: "3rem",
   };
   return (
-    <Fragment>
+    <div>
       <div className="align-items-center h-100 d-flex w-50 mx-auto">
         <div className="mx-auto text-center">
           <div
-            class="spinner-border mr-3 text-info"
+            className="spinner-border mr-3 text-info"
             style={styles}
             role="status"
           >
@@ -18,7 +18,7 @@ const LoadingView = () => {
           </div>
         </div>
       </div>
-    </Fragment>
+    </div>
   );
 };
 

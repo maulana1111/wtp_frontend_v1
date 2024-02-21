@@ -2,7 +2,7 @@ import {Fragment} from "react";
 
 export default function PageDashboard() {
     return (
-        <Fragment>
+        <div>
             <h1>Ini Dashboard</h1>
             <div className="row align-items-center mb-2">
                 <div className="col">
@@ -582,6 +582,6 @@ export default function PageDashboard() {
                     </div>
                 </div>
             </div>
-        </Fragment>
+        </div>
     );
 }

@@ -56,7 +56,7 @@ const RequestData = ({
           break;
         case "DELETE":
           api
-            .delete(url, { ...config, data })
+            .delete(url, { ...config, params: data })
             .then((response) => resolve(response.data))
             .catch((error) => reject(error));
           break;

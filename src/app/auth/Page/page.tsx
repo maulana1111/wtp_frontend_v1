@@ -24,7 +24,7 @@ const PageAuth: React.FC<PropsAuth> = ({
   };
   
   return (
-    <Fragment>
+    <div>
       <PageLoader cond={isLoadingView} />
       <div className="login-content">
         <div className="frame">
@@ -97,7 +97,7 @@ const PageAuth: React.FC<PropsAuth> = ({
           </div>
         </div>
       </div>
-    </Fragment>
+    </div>
   );
 };
 

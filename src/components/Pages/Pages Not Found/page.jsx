@@ -2,7 +2,7 @@ import { Fragment } from "react";
 
 export default function PageNotFound() {
   return (
-    <Fragment>
+    <div>
       <div className="align-items-center h-100 d-flex w-50 mx-auto">
         <div className="mx-auto text-center">
           <h1
@@ -18,6 +18,6 @@ export default function PageNotFound() {
           </a>
         </div>
       </div>
-    </Fragment>
+    </div>
   );
 }

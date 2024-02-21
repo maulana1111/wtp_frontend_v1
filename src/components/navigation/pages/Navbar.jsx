@@ -2,7 +2,7 @@ import {Fragment} from "react";
 
 export default function Navbar() {
   return (
-    <Fragment>
+    <div>
       <nav className="topnav navbar navbar-light">
         <button
             type="button"
@@ -43,6 +43,6 @@ export default function Navbar() {
           </li>
         </ul>
       </nav>
-    </Fragment>
+    </div>
   );
 }

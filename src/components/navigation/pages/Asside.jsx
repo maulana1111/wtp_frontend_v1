@@ -3,7 +3,7 @@ import Menu from "../Component/Menu";
 
 export default function Asside({ menus }) {
   return (
-    <Fragment>
+    <div>
       <aside
         className="sidebar-left border-right bg-white shadow"
         id="leftSidebar"
@@ -49,6 +49,6 @@ export default function Asside({ menus }) {
           <Menu items={menus} />
         </nav>
       </aside>
-    </Fragment>
+    </div>
   );
 }

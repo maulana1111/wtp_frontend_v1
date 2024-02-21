@@ -3,8 +3,8 @@ import CrudViewPages from "../../../../components/Tables/pages/pages";
 
 export default function MenuView({ context }) {
   return (
-    <Fragment>
+    <div>
       {<CrudViewPages title={context.title} data={context.data} />}
-    </Fragment>
+    </div>
   );
 }

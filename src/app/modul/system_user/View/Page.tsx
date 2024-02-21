@@ -7,21 +7,13 @@ const PageSystemUser: React.FC<Props> = ({
   title,
   data,
   isLoading,
-  field,
+  fields,
   onClickAction,
+  formData,
 }) => {
   return (
-    <Fragment>
-      {
-        <CrudViewPages
-          title={title}
-          data={data}
-          isLoading={isLoading}
-          field={field}
-          onClickAction={(param: any, id: any) => onClickAction(param, id)}
-        />
-      }
-    </Fragment>
+    <div>
+    </div>
   );
 };
 

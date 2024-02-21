@@ -5,7 +5,7 @@ import { Outlet } from "react-router-dom";
 
 export default function IndexNavigation({ menu }) {
   return (
-    <Fragment>
+    <div>
       <Navbar />
       <Asside menus={menu} />
       <main role="main" className="main-content">
@@ -17,6 +17,6 @@ export default function IndexNavigation({ menu }) {
           </div>
         </div>
       </main>
-    </Fragment>
+    </div>
   );
 }
